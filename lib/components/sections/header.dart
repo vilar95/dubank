@@ -4,7 +4,8 @@ import 'package:estilizacao_componentes/themes/theme_colors.dart';
 import 'package:flutter/material.dart';
 
 class Header extends StatefulWidget {
-  const Header({Key? key}) : super(key: key);
+  const Header({required this.api, Key? key}) : super(key: key);
+  final Future<String> api;
 
   @override
   State<Header> createState() => _HeaderState();
@@ -19,33 +20,29 @@ class _HeaderState extends State<Header> {
       },
       child: Container(
         decoration: const BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: ThemeColors.headerGradient),
-        borderRadius: BorderRadius.vertical(bottom: Radius.circular(10)),
-      ),
-        
+          gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: ThemeColors.headerGradient),
+          borderRadius: BorderRadius.vertical(bottom: Radius.circular(10)),
+        ),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(16, 40, 16, 16),
           child: Column(
-            
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  
                   Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 0, 0, 10),
-                      child: Text(
-                        'DuBank',
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              color: ThemeColors.primaryColor,
-                              
-                            ),
-                      ),
+                    padding: const EdgeInsets.fromLTRB(10, 0, 0, 10),
+                    child: Text(
+                      'DuBank',
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            color: ThemeColors.primaryColor,
+                          ),
                     ),
+                  ),
                 ],
               ),
               Row(
@@ -72,7 +69,7 @@ class _HeaderState extends State<Header> {
                     ],
                   ),
                   FutureBuilder(
-                      future: BankHttp().dolarToReal(),
+                      future: widget.api,
                       builder: (context, snapshot) {
                         switch (snapshot.connectionState) {
                           case ConnectionState.none:
